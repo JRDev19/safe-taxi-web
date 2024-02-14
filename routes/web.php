@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,13 +25,17 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'permission.role', 'verified'],'prefix' => '/dashboard'], function () {
+//Route::group(['middleware' => ['validaterolespermissions', 'auth'], 'prefix' => '/dashboard'], function () {
+//Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified', ])->group(function () {
+    Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::resourceSoftDelete('roles', RoleController::class);
+    Route::resource('roles',  RoleController::class);
+
+    Route::resourceSoftDelete('permissions', PermissionController::class);
+    Route::resource('permissions',  PermissionController::class);
+
 });
