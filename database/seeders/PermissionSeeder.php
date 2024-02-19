@@ -13,7 +13,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $defaultPermissions = ['roles', 'permissions'];
+        $defaultPermissions = ['roles', 'permissions', 'menus'];
         $defaultSubpermissions = ['index','create','store', 'show', 'edit', 'update', 'destroy', 'trash', 'restore', 'drop', 'restoreAll', 'dropAll'];
 
         //Principal permission
@@ -31,7 +31,7 @@ class PermissionSeeder extends Seeder
 
             foreach($defaultSubpermissions as $subpermission){
 
-                $newPermission = Permission::create(['alias' => $subpermission,'id_parent'=> $lastPermission]);
+                Permission::create(['alias' => $subpermission,'id_parent'=> $lastPermission]);
 
             }
         }

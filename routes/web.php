@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Foundation\Application;
@@ -38,4 +39,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::resourceSoftDelete('permissions', PermissionController::class);
     Route::resource('permissions',  PermissionController::class);
 
+    Route::resourceSoftDelete('menus', MenuController::class);
+    Route::resource('menus',  MenuController::class);
 });

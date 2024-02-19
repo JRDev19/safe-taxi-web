@@ -46,11 +46,14 @@ const logout = () => {
                                 <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
                             </div>
-
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                            <div>
+
+                            </div>
+                            <div v-for="(menu, index) in $page.props.menu.menu"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink v-if="index > 0" :href="route(menu.destination_url)" :active="route().current(menu.destination_url)">
+                                    {{ menu.name }}
                                 </NavLink>
                             </div>
                         </div>
@@ -199,7 +202,8 @@ const logout = () => {
                 </div>
 
                 <!-- Responsive Navigation Menu -->
-                <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
+                <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
+                    class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
@@ -299,13 +303,12 @@ const logout = () => {
             </header>
 
             <!-- Page Content -->
-        <main>
-            <div v-if="$page.props.flash.message" class="text-blue-500 m-4">
-            {{$page.props.flash.message}}
-            </div>
-            <slot />
-        </main>
-    </div>
-    <Modal />
-</div>
-</template>
+            <main>
+                <div v-if="$page.props.flash.message" class="text-blue-500 m-4">
+                    {{ $page.props.flash.message }}
+                </div>
+                <slot />
+            </main>
+        </div>
+        <Modal />
+    </div></template>
