@@ -14,29 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ValidatePermissionRole
 {
     // Some global variables are initialized.
-    private $permission, $idParent = 1, $previousRouteName;
-
-    // Use the constructor function to get the action name from the previous url.
-    public function __construct(Request $request)
-    {
-        // Initialize a try to handle existing errors.
-        try {
-            // This variable completely obtains the previous url.
-            $route = Route::getRoutes()->match(request()->create(url()->previous()));
-
-            // This variable gets the action name from the url.
-            $previousRouteName = $route ? $route->getName() : null;
-        }
-        // Catch the error when the route does not support the GET method.
-        catch (\Exception $e)
-        {
-            // This variable gets the action name from the current url.
-            $previousRouteName = $request->route()->getName();
-        }
-
-        // Assign the local variable to the global one.
-        $this->previousRouteName = $previousRouteName;
-    }
+    private $permission, $idParent = 1;
 
     /**
      * Handle an incoming request.
@@ -54,14 +32,11 @@ class ValidatePermissionRole
         // Obtain all the permissions and save it in a variable.
         $permissionCollection = Permission::all();
 
-        // Get all the roles and assign them in a variable.
-        $rolesCollection = Role::all();
-
         // Get the user with his role.
-        $userRole = $rolesCollection->where('id', Auth::user()->id_role)->first();
+        $userRole = Role::where('id', Auth::user()->id_role)->first();
 
         // Predefine the redirect variable that contains the modal view in case of authentication failures.
-        $modalData = Inertia::modal('Auth/AccessDenied')->baseRoute($this->previousRouteName);
+        $modalData = Inertia::render('Auth/AccessDenied');
 
         // Condition that the user contains a role and is valid within our collection of roles.
         if($userRole !== null)
@@ -70,18 +45,9 @@ class ValidatePermissionRole
             foreach ($routeParts as $index => $part)
             {
                 // PART 1
-                // The first value of the route is evaluated.
-                if($index == 0)
-                {
-                    //This part of the route must always match the alias of the permission collection that has a parent_id of 1.
-                    $this->permission = $permissionCollection->where('alias', $part)->where('id_parent', $this->idParent)->first();
-                }
-                // The other value of the route is evaluated.
-                else
-                {
-                    //This part of the route must match the alias of the permission collection that has a parent_id to the previous route evaluated.
-                    $this->permission = $permissionCollection->where('alias', $part)->where('id_parent', $this->idParent)->first();
-                }
+                // The values of the route are evaluated.
+                // This part of the route must match the alias of the permission collection that has a parent_id to the previous route evaluated.
+                $this->permission = $permissionCollection->where('alias', $part)->where('id_parent', $this->idParent)->first();
 
                 // PART 2
                 // If the permission is not found or does not exist.

@@ -29,8 +29,7 @@ class PermissionController extends Controller
 
     public function show(Permission $permission)
     {
-        return Inertia::modal('Permissions/Show')
-            ->with(['permission' => $permission->with('permission_self')->where('id', $permission->id)->first()])->baseRoute("permissions.index", $permission);
+        return Inertia::modal('Permissions/Show')->with(['permission' => $permission->with('permission_self')->where('id', $permission->id)->first()])->baseRoute("permissions.index", $permission);
     }
 
     public function edit(Permission $permission)
@@ -54,7 +53,6 @@ class PermissionController extends Controller
 
     public function trash(Permission $permissions)
     {
-        //dd($permissions->with('permission_self')->onlyTrashed()->get());
         return Inertia::render('Permissions/Trash', ['permissions'=> $permissions->with('permission_self')->onlyTrashed()->get()]);
     }
 
