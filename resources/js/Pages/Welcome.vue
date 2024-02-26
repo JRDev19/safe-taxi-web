@@ -37,7 +37,7 @@ defineProps({
                 <div class="absolute left-0 bottom-0 h-5/6 w-5/12 border-2 border-red-600 bg-gradient-to-b from-red-600 to-red-300 blur-xl"></div>
             </div>    
             <div class="grow w-7/12  flex items-center justify-end">
-                <img src="../../../public/fondo2.png" class="w-11/12 z-20" alt="">
+                <img src="/fondo2.png" class="w-11/12 z-20" alt="">
             </div>
         </div>
         <div class="absolute bg-white h-96 w-3/4 ml-10 bottom-0 bg-gradient-to-l from-red-500 to-red-300 blur-3xl"></div>
