@@ -33,6 +33,10 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('/roles/relationship', [RoleController::class, 'indexRelationship'])->name('roles.indexRelationship');
+    Route::get('/roles/relationship/{role}/edit', [RoleController::class, 'editRelationship'])->name('roles.editRelationship');
+    Route::put('/roles/relationship/{role}', [RoleController::class, 'updateRelationship'])->name('roles.updateRelationship');
+
     Route::resourceSoftDelete('roles', RoleController::class);
     Route::resource('roles',  RoleController::class);
 

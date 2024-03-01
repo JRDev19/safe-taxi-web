@@ -35,5 +35,9 @@ class PermissionSeeder extends Seeder
 
             }
         }
+
+        Permission::create(['alias' => 'indexRelationship','id_parent'=> 3]);
+        Permission::create(['alias' => 'editRelationship','id_parent'=> 3]);
+        Permission::create(['alias' => 'updateRelationship','id_parent'=> 3]);
     }
 }
