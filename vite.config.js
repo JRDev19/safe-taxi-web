@@ -18,15 +18,5 @@ export default defineConfig({
             },
         }),
     ],
-    build: {
-        lib: {
-          entry: resolve(__dirname, "node_modules/dist/types/index.d.ts"),
-          name: "Momentum Modal",
-          fileName: `momentum-modal`,
-        },
-        rollupOptions: {
-          external: ["vue", "@inertiajs/vue3", "axios"],
-        },
-      },
 });
 
