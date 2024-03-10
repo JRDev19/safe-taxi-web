@@ -26,7 +26,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Register" />
+    <Head title="Registrarse" />
 
     <AuthenticationCard :regLog="true" :link="route('home')" :reg="`sm:max-w-4xl`">
         <template #logo>
@@ -34,7 +34,7 @@ const submit = () => {
         </template>
 
         <form @submit.prevent="submit" class="grid grid-cols-2 gap-x-8">
-            <h1 class="font-medium underline underline-offset-8 decoration-red-500 decoration-2 text-xl col-span-2 text-center mb-6">REGISTRATE</h1>
+            <h1 class="font-medium underline underline-offset-8 decoration-principal-500 decoration-2 text-xl col-span-2 text-center mb-6">REGÍSTRATE</h1>
             <div class="flex flex-col">
                 <div>
                     <InputLabel for="name" value="Nombre" />
@@ -134,14 +134,14 @@ const submit = () => {
             </div>
 
             <div class="flex flex-col items-center justify-end mt-4 col-span-2">
-                <PrimaryButton class="flex items-center justify-center ms-4 me-4 mb-2 bg-red-500 w-full hover:bg-red-400" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="flex items-center justify-center ms-4 me-4 mb-2 w-full" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Registrate
                 </PrimaryButton>
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-principal-500">
                     ¿Ya tienes una cuenta?
                 </Link>
             </div>
         </form>
-        
+
     </AuthenticationCard>
 </template>

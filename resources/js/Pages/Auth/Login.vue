@@ -30,9 +30,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Iniciar sesión" />
 
-    <AuthenticationCard :regLog="true" textLink="Home" :link="route('home')">
+    <AuthenticationCard :regLog="true" :link="route('home')">
         <template #logo>
             <AuthenticationCardLogo />
         </template>
@@ -42,7 +42,7 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <h1 class="font-medium underline underline-offset-8 decoration-red-500 decoration-2 text-xl col-span-2 text-center mb-6">INICIA SESIÓN</h1>
+            <h1 class="font-medium underline underline-offset-8 decoration-principal-500 decoration-2 text-xl col-span-2 text-center mb-6">INICIA SESIÓN</h1>
             <div>
                 <InputLabel for="email" value="Correo" />
                 <TextInput
@@ -73,7 +73,7 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Recuerdame</span>
+                    <span class="ms-2 text-sm text-gray-600">Recuérdame</span>
                 </label>
             </div>
 
@@ -82,8 +82,8 @@ const submit = () => {
                     ¿Olvidaste tu contraseña?
                 </Link>
 
-                <PrimaryButton class="ms-4 bg-red-500 hover:bg-red-400" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Iniciar
                 </PrimaryButton>
             </div>
         </form>

@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import { RiGooglePlayFill, RiAppleFill } from '@remixicon/vue';
 
 defineProps({
     canLogin: Boolean,
@@ -10,42 +11,50 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Welcome" />
-
-    <div class="min-h-screen bg-red-600 flex flex-col overflow-hidden">
-        <div class="h-24 w-full flex justify-between text-lg font-semibold">
-            <div class="min-h-full flex gap-10">
-                <div class="min-h-full ml-12 flex items-center">logosadasdadsadasdas</div>
+    <Head title="TAXISEGURO - IMOVEQROO" />
+    <!--div class="w-screen animated-background h-screen bg-gradient-to-r from-blue-500 via-blue-500 to-indigo-500" ></div-->
+    <div class="min-h-screen bg-[length:400%] animate-background-grad bg-gradient-to-tl from-principal-400 via-principal-600 to-principal-800 flex flex-col overflow-hidden">
+        <nav class="mt-10 w-full flex items-center justify-between text-lg font-semibold">
+            <div class="ml-5 w-[350px]">
+                <Link :href="'/'">
+                    <img :src="'/images/imoveqroo-logo-blanco.png'" alt="Home">
+                </Link>
             </div>
-            <div v-if="canLogin" class="min-h-full mr-20 flex gap-12 items-center">
+            <div v-if="canLogin" class="mr-10 flex gap-12 items-center">
                 <Link v-if="$page.props.auth.user" :href="route('dashboard')">Dashboard</Link>
                 <template v-else>
-                    <Link :href="route('login')">Log in</Link>
-                    <Link :href="route('register')">Register</Link>
+                    <Link :href="route('login')" class="text-gray-100 hover:text-gray-200 active:text-gray-100">Iniciar sesión</Link>
+                    <Link :href="route('register')" class="text-gray-100 hover:text-gray-200 active:text-gray-100">Registrate</Link>
                 </template>
             </div>
-        </div>
+        </nav>
         <div class="grow w-full flex">
-            <div class="grow w-5/12 flex flex-col justify-center items-center gap-4 mb-36">
-                <h2 class=" w-5/6 font-bold text-3xl z-10">Lorem ipsum dolor</h2>
-                <h2 class="w-5/6 font-black text-5xl z-10">Lorem ipsum dolor sit amet</h2>
-                <h3 class="w-5/6 z-10">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur consectetur iste architecto dolorem magnam aperiam velit earum atque consequuntur quod. Rerum commodi incidunt mollitia, facere laborum fugiat quae amet officia.</h3>
-                <h3 class="w-5/6 font-semibold z-10">Lorem ipsum dolor</h3>
-                <div class="w-5/6 z-10">
-                    <button class="mt-12 bg-amber-400 font-semibold rounded-full px-20 py-4">Click me!</button>
+            <div class="grow w-5/12 ml-10 flex flex-col justify-center items-start gap-4 mb-36 text-gray-100">
+                <h2 class="tracking-tighter text-8xl font-black font-tiltwarp pb-6 bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100),theme(colors.amber.200),theme(colors.amber.300),theme(colors.amber.200),theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100))] bg-[length:200%_auto] animate-text-light">TAXISEGURO</h2>
+                <h2 class="font-black text-3xl pb-10 bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100),theme(colors.amber.200),theme(colors.amber.300),theme(colors.amber.200),theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100),theme(colors.gray.100))] bg-[length:200%_auto] animate-text-light">La mejor manera de realizar cada viaje: seguridad y transparencia al momento.</h2>
+
+                <div class="flex gap-10 w-full pb-6">
+                    <a href="" class="p-3 flex border rounded-lg hover:border-amber-400  hover:text-amber-400 active:text-amber-500">
+                        <RiGooglePlayFill :size="'42'"/>
+                        <div class="flex justify-center flex-col pl-3">
+                            <p class="text-[10px]">Disponible en</p>
+                            <p class="font-bold text-lg -mt-2">Google Play</p>
+                        </div>
+                    </a>
+                    <a href="" class="p-3 flex border rounded-lg hover:border-amber-400  hover:text-amber-400  active:text-amber-500">
+                        <RiAppleFill :size="'42'"/>
+                        <div class="flex justify-center flex-col pl-3">
+                            <p class="text-[10px]">Disponible en</p>
+                            <p class="font-bold text-lg -mt-2">Apple Store</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="absolute left-0 bottom-0 h-5/6 w-5/12 border-2 border-red-600 bg-gradient-to-b from-red-600 to-red-300 blur-xl"></div>
-            </div>    
+            </div>
             <div class="grow w-7/12  flex items-center justify-end">
-                <img src="/fondo2.png" class="w-11/12 z-20" alt="">
+                <img class="w-full " :src="'/images/taxi-foto.png'" alt="Taxi" />
             </div>
         </div>
-        <div class="absolute bg-white h-96 w-3/4 ml-10 bottom-0 bg-gradient-to-l from-red-500 to-red-300 blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 bg-red-600 h-14 w-full z-10"></div>
-        <!--<div class="absolute bottom-0 -left-8 bg-white h-24 w-44 rounded-t-full"></div>-->
     </div>
 </template>
 
-<style>
-
-</style>
+<style></style>
