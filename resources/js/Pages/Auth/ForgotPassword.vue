@@ -21,15 +21,16 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot Password" />
+    <Head title="Recuperar contraseña" />
 
-    <AuthenticationCard>
+    <AuthenticationCard :regLog="true">
         <template #logo>
             <AuthenticationCardLogo />
         </template>
 
+        <h1 class="font-medium underline underline-offset-8 decoration-principal-500 decoration-2 text-xl col-span-2 text-center mb-6">RECUPERAR CONTRASEÑA</h1>
         <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+            ¿Olvidaste tu contraseña? No hay problema. Solo dejanos conocer tu correo y te enviaremos un link para recuperar tu contraseña seleccionando una nueva.
         </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -38,7 +39,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="Correo" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -53,7 +54,7 @@ const submit = () => {
 
             <div class="flex items-center justify-end mt-4">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
+                    Obtener Link de Recuperación
                 </PrimaryButton>
             </div>
         </form>
