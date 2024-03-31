@@ -1,6 +1,15 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { ref } from 'vue';
+import { router, Link } from '@inertiajs/vue3';
 import RecursiveList from './RecursiveList.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import InputIcon from 'primevue/inputicon';
+import IconField from 'primevue/iconfield';
+import Button from 'primevue/button';
+
+
 
 const props = defineProps({
     roles: {
@@ -13,6 +22,21 @@ const props = defineProps({
         type: Array,
     },
 });
+console.log(props.roles)
+console.log(props.rolesPermissions)
+console.log(props.rolesMenus)
+
+const visibilidad = ref(Array(props.rolesPermissions.length).fill(false));
+
+const cambiarVisibilidad = (index) => {
+    visibilidad.value[index] = !visibilidad.value[index];
+};
+
+const visibilidadMenus = ref(Array(props.rolesMenus.length).fill(false));
+
+const cambiarVisibilidadMenus = (index) => {
+    visibilidadMenus.value[index] = !visibilidadMenus.value[index];
+};
 </script>
 
 <template>
@@ -21,38 +45,43 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-6 py-10">
                     <h1 class="text-2xl font-bold">Listado de Roles - Permisos - Menús</h1>
-                    <div>
-                        <div class="flex justify-between items-start">
-                            <p class="text-xl font-bold">#</p>
-
-                            <p class="text-xl font-bold">Rol</p>
-
-                            <p class="text-xl font-bold">Permisos</p>
-
-                            <p class="text-xl font-bold">Menús</p>
-
-                            <p class="text-xl font-bold">Acciones</p>
-
-                        </div>
-                        <div class="py-5 flex justify-between items-start" v-for="(role, index) in roles">
-                            <p class="font-semibold text-lg"> {{ index+1 }}</p>
-                            <p class="font-semibold text-lg"> {{ role.name }}</p>
-                            <div>
-                                <p>controller</p>
-                                <RecursiveList :target="'alias'" :items="rolesPermissions[index]" />
-                            </div>
-                            <div>
-                                <p>index</p>
-                                <RecursiveList :target="'name'" :items="rolesMenus[index]" />
-                            </div>
-                            <div>
-                                <a :href="route('roles.editRelationship', role.id)">editar</a>
-                            </div>
-                        </div>
+                    
+                    <div class="card">
+                        <DataTable :value="roles" tableStyle="min-width: 50rem">
+                            <Column header="#">
+                                <template #body="slotProps">{{ slotProps.index + 1 }}</template>
+                            </Column>
+                            <Column field="name" header="Rol"></Column>
+                            <Column header="Permisos">
+                                <template #body="slotProps">
+                                    <p v-show="rolesPermissions[slotProps.index] != 0" class="font-bold hover:cursor-pointer" @click.prevent="cambiarVisibilidad(slotProps.index)">Controller<i :class="{'pi pi-angle-down': !visibilidad[slotProps.index], 'pi pi-angle-up': visibilidad[slotProps.index]}" ></i></p>
+                                    <p v-show="rolesPermissions[slotProps.index] == 0" class="font-bold">Controller</p>
+                                    <div v-show="visibilidad[slotProps.index]">
+                                        <RecursiveList :target="'alias'" :items="rolesPermissions[slotProps.index]" />
+                                    </div>
+                                </template>
+                            </Column>
+                            <Column header="Menús">
+                                <template #body="slotProps">
+                                    <p v-show="rolesMenus[slotProps.index] != 0" class="font-bold hover:cursor-pointer" @click.prevent="cambiarVisibilidadMenus(slotProps.index)">Index<i :class="{'pi pi-angle-down': !visibilidadMenus[slotProps.index], 'pi pi-angle-up': visibilidadMenus[slotProps.index]}" ></i></p>
+                                    <p v-show="rolesMenus[slotProps.index] == 0" class="font-bold">Index</p>
+                                    <div v-show="visibilidadMenus[slotProps.index]">
+                                        <RecursiveList :target="'name'" :items="rolesMenus[slotProps.index]" />
+                                    </div>
+                                </template>
+                            </Column>
+                            <Column header="Acciones" class="flex justify-center">
+                                <template #body="slotProps">
+                                    <Link :href="route('roles.editRelationship', { id: slotProps.data.id })" class="w-3/4"><Button icon="pi pi-file-edit" aria-label="Ver" class="w-full p-0 bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500" /></Link>
+                                </template>                    
+                            </Column>
+                        </DataTable>
                     </div>
+
+                    
+                    
                 </div>
             </div>
         </div>
     </AppLayout>
 </template>
-

@@ -1,4 +1,5 @@
 <script setup>
+import Tree from 'primevue/tree';
 defineEmits(['upload-data'])
 
 </script>
@@ -9,18 +10,18 @@ defineEmits(['upload-data'])
             <div v-if="item[target] == comparisionItems?.[index]?.[target]" :style="{ marginLeft: level * 20 + 'px' }" class="flex items-center mb-4">
                 <input checked
                     @change="updateModel(item.id)" type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 checked:bg-blue-500">
                 <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">{{ item[target] }}</label>
             </div>
 
             <div v-else-if="item[target] != comparisionItems?.[index]?.[target] && comparisionFlag == true"
                 :style="{ marginLeft: level * 20 + 'px' }" class="flex items-center mb-4">
                 <input @change="updateModel(item.id)" type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 checked:bg-blue-500">
                 <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">{{ item[target] }}</label>
             </div>
 
-            <p v-else :style="{ marginLeft: level * 20 + 'px' }">{{ item[target] }} </p>
+            <p v-else :style="{ marginLeft: level * 20 + 'px' }" class="font-semibold">{{ item[target].charAt(0).toUpperCase()  + item[target].slice(1) }} </p>
 
             <RecursiveList :items="item.children" :target="target" :level="level + 1"
                 :comparisionItems="comparisionItems?.[index]?.children" :comparisionFlag="comparisionFlag"
@@ -31,18 +32,18 @@ defineEmits(['upload-data'])
 
             <div v-if="item[target] == comparisionItems?.[index]?.[target] " :style="{ marginLeft: level * 20 + 'px' }" class="flex items-center mb-4">
                 <input checked @change="updateModel(item.id, this)" type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 checked:bg-blue-500">
                 <label class="ms-2 text-sm text-gray-900 dark:text-gray-300">{{ item[target] }}</label>
             </div>
 
             <div v-else-if="item[target] != comparisionItems?.[index]?.[target] && comparisionFlag == true"
                 :style="{ marginLeft: level * 20 + 'px' }" class="flex items-center mb-4">
                 <input @change="updateModel(item.id)" type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-900 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 checked:bg-blue-500">
                 <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">{{ item[target] }}</label>
             </div>
 
-            <p v-else :style="{ marginLeft: level * 20 + 'px' }">{{ item[target] }}</p>
+            <p v-else :style="{ marginLeft: level * 20 + 'px' }">{{ item[target].charAt(0).toUpperCase()  + item[target].slice(1) }}</p>
         </div>
     </div>
 </template>

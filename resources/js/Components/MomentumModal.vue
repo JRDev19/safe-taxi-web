@@ -29,7 +29,7 @@ const { show, close, redirect } = useModal()
                     leave-active-class="ease-in duration-200"
                     leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                     leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                    <div v-show="show" class="m-auto p-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all w-3/5 ">
+                    <div v-show="show" class="m-auto p-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all w-1/4 ">
                         <slot v-if="show" />
                     </div>
                 </transition>

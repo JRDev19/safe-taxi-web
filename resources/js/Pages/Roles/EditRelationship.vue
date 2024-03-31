@@ -2,6 +2,12 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import RecursiveList from './RecursiveList.vue';
 import { useForm } from "@inertiajs/vue3";
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import InputIcon from 'primevue/inputicon';
+import IconField from 'primevue/iconfield';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 defineEmits(['upload-data'])
 
 const props = defineProps({
@@ -72,7 +78,7 @@ const uploadData = (item, model) => {
             form[model].push(item);
         }
 };
-
+console.log(props.role)
 </script>
 
 <template>
@@ -99,8 +105,8 @@ const uploadData = (item, model) => {
                                 <div>
                                     <div class="flex items-center mb-4">
                                         <input checked type="checkbox" disabled
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">controller</label>
+                                            class="w-4 h-4 text-blue-600 bg-blue-500 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">Controller</label>
                                     </div>
                                     <RecursiveList :target="'alias'" :items="permissions" :comparisionItems="rolePermission"
                                         :comparisionFlag="true" @upload-data="uploadData" />
@@ -108,15 +114,15 @@ const uploadData = (item, model) => {
                                 <div>
                                     <div class="flex items-center mb-4">
                                         <input checked type="checkbox" disabled
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">index</label>
+                                            class="w-4 h-4 text-blue-600 bg-blue-500 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">Index</label>
                                     </div>
                                     <RecursiveList :target="'name'" :items="menus" :comparisionItems="roleMenu"
                                         :comparisionFlag="true" @upload-data="uploadData" />
                                 </div>
                             </div>
                             <input type="hidden" name="_token" :value="csrf">
-                            <button type="submit" class="btn btn-primary">Editar</button>
+                            <Button type="submit" label="Editar" class=" fixed bottom-20 left-44 mt-2 px-6 py-1  bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500" />
                         </form>
                     </div>
                 </div>
