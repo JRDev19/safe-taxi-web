@@ -26,31 +26,33 @@ const form = useForm({
 <template>
     <Modal>
         <form @submit.prevent="form.put(route('menus.update', props.menu.id))">
-            <h1 class="text-2xl font-bold text-center">Editar el menú</h1>
-            <div class="form-group flex flex-col items-center">
-                <FloatLabel class="w-full md:w-14rem m-6 mb-0">
+            <h1 class="text-2xl font-bold text-center">Edita el menú</h1>
+            <div class="form-group flex flex-col w-full">
+                <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
                     <Dropdown v-model="form.id_parent" inputId="id_parent" :options="menus" optionLabel="name" class="w-full" optionValue="id" />
                     <label for="id_parent">Selecciona un menú padre</label>
                 </FloatLabel>
 
-                <FloatLabel class="w-full md:w-14rem m-6 mb-0">
+                <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
                     <InputText id="name" v-model="form.name" class="w-full" />
                     <label for="name">Escribe un nombre</label>
                 </FloatLabel>
-                <div class="text-red-500 ml-6 text-sm" v-if="form.errors.name">
-                    {{ 'El campo nombre es requerido' }}
+                <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.name">
+                   <p> {{ form.errors.name }}</p>
                 </div>
 
-                <FloatLabel class="w-full md:w-14rem m-6 mb-0">
+                <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
                     <InputText id="url" v-model="form.destination_url" class="w-full" />
                     <label for="url">Escribe una URL destino</label>
                 </FloatLabel>
-                <div class="text-red-500 ml-6 text-sm" v-if="form.errors.destination_url">
-                    {{ 'El campo URL debe tener entre 3 y 50 carácteres' }}
+                <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.destination_url">
+                    <p>{{ form.errors.destination_url }}</p>
                 </div>
             </div>
             <input type="hidden" name="_token" :value="csrf">
-            <Button type="submit" label="Editar" class="mt-2 px-6 py-1  bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500" />
+            <div class="flex justify-end">
+                <Button type="submit" label="Editar" class="mt-6 px-6 py-1 bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" />
+            </div>
         </form>
 
     </Modal>

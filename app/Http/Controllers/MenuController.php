@@ -16,7 +16,7 @@ class MenuController extends Controller
 
     public function create(Menu $menus)
     {
-        return Inertia::modal('Menus/Create', ['menus' => $menus->all()])->baseRoute("menus.index", $menus);
+        return Inertia::modal('Menus/Create', ['menus' => $menus->where('id_parent', 1)->get()])->baseRoute("menus.index", $menus);
     }
 
     public function store(StoreMenuRequest $request)
@@ -33,7 +33,7 @@ class MenuController extends Controller
 
     public function edit(Menu $menu)
     {
-        return Inertia::modal('Menus/Edit')->with(['menu' => $menu->with('menu_self')->where('id', $menu->id)->first(), 'menus' => $menu->whereNotIn('id', [$menu->id])->get()])->baseRoute("menus.index", $menu);
+        return Inertia::modal('Menus/Edit')->with(['menu' => $menu->with('menu_self')->where('id', $menu->id)->first(), 'menus' => $menu->where('id_parent', 1)->whereNotIn('id', [$menu->id])->get()])->baseRoute("menus.index", $menu);
     }
 
     public function update(Menu $menu, UpdateMenuRequest $request)

@@ -17,7 +17,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Fortify;
-
+use App\Services\TreeBuilderService;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -26,12 +26,23 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+        $this->app->singleton(TreeBuilderService::class, function ($app) {
+            return new TreeBuilderService();
+        });
+
+        $this->app->instance(LoginResponse::class, new class($this->app->make(TreeBuilderService::class)) implements LoginResponse {
+            private $treeBuilderService;
+
+            public function __construct(TreeBuilderService $treeBuilderService)
+            {
+                $this->treeBuilderService = $treeBuilderService;
+            }
+
             public function toResponse($request)
             {
                 $userRole = Role::where('id', Auth::user()->id_role)->first();
                 $userRoleMenu = $userRole->menus()->get();
-                return session(['menu' => $userRoleMenu]);
+                return session(['menu' => $this->treeBuilderService->buildTree($userRoleMenu->toArray())]);
             }
         });
     }
@@ -55,18 +66,5 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
-
-        /*Event::listen(Authenticated::class, function ($event) {
-
-            $user = $event->user;
-            dd('El usuario ' . $user->name . ' ha iniciado sesión.');
-            /*$userRole = Role::where('id', Auth::user()->id_role)->first();
-            $userRoleMenu = $userRole->menus()->pivot;
-
-            dd($userRoleMenu);
-
-            session(['menu' => Menu::all()]);
-            // Aquí puedes realizar cualquier acción que desees después del inicio de sesión
-        });*/
     }
 }

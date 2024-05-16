@@ -10,9 +10,15 @@ const props = defineProps({
         type: Object,
     },
 });
-
+const deleteSwal = Swal.mixin({
+    customClass: {
+        confirmButton: "p-button p-component py-1 bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 mr-4",
+        cancelButton: "p-button p-component py-1 bg-gray-500 border-gray-500 hover:bg-gray-600 hover:border-gray-600 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+    },
+    buttonsStyling: false
+});
 const destroy = (id) => {
-    Swal.fire({
+    deleteSwal.fire({
         title: '¿Estás seguro de que deseas eliminar este registro?',
         text: 'Recuerda que cuentas con un plazo de 30 días para recuperar este registro.',
         icon: 'question',
@@ -30,18 +36,22 @@ const destroy = (id) => {
 
 <template>
     <Modal>
-            <h1 class="text-2xl font-bold">Visualizar rol</h1>
-            <div class="form-group flex flex-col items-center gap-2">
+        <h1 class="text-2xl font-bold">Visualizar rol</h1>
+        <div class="form-group flex flex-col">
+            <div class="mt-4 mb-0">
                 <label for="name" class="w-full">Nombre</label>
                 <InputText class="w-full" id="name" :placeholder="role.name" disabled />
-
-                <div class="w-full flex items-start gap-4">
-                    <Link :href="route('roles.edit', role.id)">
-                        <Button label="Editar" icon="pi pi-file-edit" aria-label="Ver" class="py-1 px-2 bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500" />
-                    </Link>
-                    <Button label="Borrar" icon="pi pi-trash" class="py-1 px-2 bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600" @click.prevent="destroy(role.id)" />
-                </div>
             </div>
+            <div class="w-full flex items-start mt-6 justify-between">
+                <Link :href="route('roles.edit', role.id)">
+                    <Button label="Editar" icon="pi pi-file-edit" aria-label="Ver"
+                    class="px-6 py-1 bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" />
+                </Link>
+                <Button label="Borrar" icon="pi pi-trash"
+                    class="px-6 py-1 bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600 focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+                    @click.prevent="destroy(role.id)" />
+            </div>
+        </div>
 
     </Modal>
 </template>

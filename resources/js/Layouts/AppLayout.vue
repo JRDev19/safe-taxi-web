@@ -5,9 +5,10 @@ import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Modal } from 'momentum-modal'
+import RecursiveMenu from '@/Components/RecursiveMenu.vue'
+import ResponsiveRecursiveMenu from '@/Components/ResponsiveRecursiveMenu.vue'
 
 defineProps({
     title: String,
@@ -30,6 +31,7 @@ const logout = () => {
 
 <template>
     <div>
+
         <Head :title="title" />
 
         <Banner />
@@ -39,7 +41,7 @@ const logout = () => {
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
-                        <div class="flex">
+                        <div class="flex gap-4">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
@@ -50,12 +52,8 @@ const logout = () => {
                             <div>
 
                             </div>
-                            <div v-for="(menu, index) in $page.props.menu.menu"
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink v-if="index > 0" :href="route(menu.destination_url)" :active="route().current(menu.destination_url)">
-                                    {{ menu.name }}
-                                </NavLink>
-                            </div>
+                            <RecursiveMenu :items="$page.props.menu.menu" :target="'name'" :url="'destination_url'"
+                                :level="1" />
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -86,7 +84,8 @@ const logout = () => {
                                             </div>
 
                                             <!-- Team Settings -->
-                                            <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
+                                            <DropdownLink
+                                                :href="route('teams.show', $page.props.auth.user.current_team)">
                                                 Team Settings
                                             </DropdownLink>
 
@@ -103,7 +102,8 @@ const logout = () => {
                                                     Switch Teams
                                                 </div>
 
-                                                <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                                <template v-for="team in $page.props.auth.user.all_teams"
+                                                    :key="team.id">
                                                     <form @submit.prevent="switchToTeam(team)">
                                                         <DropdownLink as="button">
                                                             <div class="flex items-center">
@@ -204,11 +204,8 @@ const logout = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
                     class="sm:hidden">
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
+                    <ResponsiveRecursiveMenu :items="$page.props.menu.menu" :target="'name'" :url="'destination_url'"
+                        :level="1" />
 
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
@@ -233,8 +230,8 @@ const logout = () => {
                                 Profile
                             </ResponsiveNavLink>
 
-                            <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"
-                                :active="route().current('api-tokens.index')">
+                            <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures"
+                                :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
                                 API Tokens
                             </ResponsiveNavLink>
 
@@ -259,8 +256,8 @@ const logout = () => {
                                     Team Settings
                                 </ResponsiveNavLink>
 
-                                <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')"
-                                    :active="route().current('teams.create')">
+                                <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams"
+                                    :href="route('teams.create')" :active="route().current('teams.create')">
                                     Create New Team
                                 </ResponsiveNavLink>
 
@@ -278,8 +275,8 @@ const logout = () => {
                                                 <div class="flex items-center">
                                                     <svg v-if="team.id == $page.props.auth.user.current_team_id"
                                                         class="me-2 h-5 w-5 text-green-400"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor">
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
@@ -304,11 +301,19 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
-                <div v-if="$page.props.flash.message" class="text-blue-500 m-4">
-                    {{ $page.props.flash.message }}
+                <div v-if="$page.props.flash.message" class="max-w-7xl -mb-12 mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-blue-100 text-sm overflow-hidden my-4 text-blue-800 sm:rounded-lg px-6 py-4 flex items-center">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="font-semibold">Información del sistema:&nbsp</span> {{ $page.props.flash.message }}
+                    </div>
                 </div>
                 <slot />
             </main>
         </div>
         <Modal />
-    </div></template>
+    </div>
+</template>

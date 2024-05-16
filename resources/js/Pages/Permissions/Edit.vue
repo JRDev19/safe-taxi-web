@@ -26,21 +26,26 @@ const form = useForm({
     <Modal>
         <form @submit.prevent="form.put(route('permissions.update', props.permission.id))">
             <h1 class="text-2xl font-bold text-center">Edita el permiso</h1>
-            <div class="form-group flex flex-col items-center">
-                <FloatLabel class="w-full md:w-14rem m-6 mb-0">
+            <div class="form-group flex flex-col w-full">
+                <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
                     <Dropdown v-model="form.id_parent" inputId="id_parent" :options="permissions" optionLabel="alias" class="w-full" optionValue="id" />
-                    <label for="id_parent">Selecciona un permiso padre</label>
+                    <label>Selecciona un permiso padre</label>
                 </FloatLabel>
-                <FloatLabel class="w-full md:w-14rem m-6 mb-0">
-                    <InputText id="name" v-model="form.alias" class="w-full" />
-                    <label for="name">Escribe un Alias</label>
+                <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.id_parent">
+                    {{ form.errors.id_parent }}
+                </div>
+                <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
+                    <InputText v-model="form.alias" class="w-full" />
+                    <label>Escribe un Alias</label>
                 </FloatLabel>
-                <div class="text-red-500 ml-6 text-sm" v-if="form.errors.alias">
-                    {{ 'El campo Alias es requerido' }}
+                <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.alias">
+                    {{ form.errors.alias }}
                 </div>
             </div>
             <input type="hidden" name="_token" :value="csrf">
-            <Button type="submit" label="Editar" class="mt-2 px-6 py-1  bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500" />
+            <div class="flex justify-end">
+                <Button type="submit" label="Editar" class="mt-6 px-6 py-1 bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" />
+            </div>
         </form>
 
     </Modal>

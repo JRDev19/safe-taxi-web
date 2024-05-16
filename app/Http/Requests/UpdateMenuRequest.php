@@ -33,7 +33,7 @@ class UpdateMenuRequest extends FormRequest
         return [
             'name' => 'required|string|between:3,30',
             'id_parent' => 'required|exists:menus,id',
-            'destination_url' => 'required|string|between:3,50'
+            'destination_url' => 'nullable|string|between:3,50'
         ];
     }
 }

@@ -1,13 +1,12 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import RecursiveList from './RecursiveList.vue';
 import { useForm } from "@inertiajs/vue3";
+import Button from 'primevue/button';
+import RecursiveList from '@/Components/RecursiveList.vue'
+import { Link } from '@inertiajs/vue3';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import InputIcon from 'primevue/inputicon';
-import IconField from 'primevue/iconfield';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
+
 defineEmits(['upload-data'])
 
 const props = defineProps({
@@ -25,7 +24,7 @@ const props = defineProps({
     },
     menus: {
         type: Array,
-    }
+    },
 });
 
 const form = useForm({
@@ -33,52 +32,49 @@ const form = useForm({
     name: [],
 });
 
-function obtenerIdsYChildrenIds(permisos) {
-    // Función recursiva para recorrer los nodos y sus hijos
+function getIdsAndChildrenIds(permissions) {
+    // Recursive function to traverse nodes and their children
     const array = [];
 
-    function recorrerNodos(nodo, parentIds) {
-        // Guardar el id y el id_parent del nodo actual
-        const id = nodo.id;
+    function traverseNodes(node, parentIds) {
+        // Save the id of the current node
+        const id = node.id;
 
-        // Si hay nodos hijos, recorrerlos también
-        if (nodo.children) {
-            nodo.children.forEach(hijo => {
-                // Agregar el id del nodo actual a los parentIds del hijo
+        // If there are child nodes, traverse them as well
+        if (node.children) {
+            node.children.forEach(child => {
+                // Add the id of the current node to the child's parentIds
                 const childParentIds = [...parentIds, id];
-                // Llamar recursivamente para los hijos
-                recorrerNodos(hijo, childParentIds);
+                // Recursively call for children
+                traverseNodes(child, childParentIds);
             });
         }
         array.push(id);
-        // Mostrar los ids y los parentIds del nodo actual
+        // Show the ids and parentIds of the current node
     }
 
-    // Iterar sobre cada nodo principal
-    permisos.forEach(nodo => {
-        // Comenzar con una lista vacía de parentIds
+    // Iterate over each main node
+    permissions.forEach(node => {
+        // Start with an empty list of parentIds
         const parentIds = [];
-        // Llamar a la función para recorrer los nodos
-        recorrerNodos(nodo, parentIds);
+        // Call the function to traverse nodes
+        traverseNodes(node, parentIds);
     });
 
     return array;
 }
+const roleArray = [props.role];
 
-obtenerIdsYChildrenIds(props.rolePermission).forEach((element) => form.alias.push(element));
-obtenerIdsYChildrenIds(props.roleMenu).forEach((element) => form.name.push(element));
-
-console.log(form.alias)
-console.log(form.name)
+getIdsAndChildrenIds(props.rolePermission).forEach((element) => form.alias.push(element));
+getIdsAndChildrenIds(props.roleMenu).forEach((element) => form.name.push(element));
 
 const uploadData = (item, model) => {
-        if (form[model].includes(item)) {
-            form[model] = form[model].filter(id => id !== item);
-        } else {
-            form[model].push(item);
-        }
+    if (form[model].includes(item)) {
+        form[model] = form[model].filter(id => id !== item);
+    } else {
+        form[model].push(item);
+    }
 };
-console.log(props.role)
 </script>
 
 <template>
@@ -86,32 +82,24 @@ console.log(props.role)
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-6 py-10">
-                    <h1 class="text-2xl font-bold">Edicion de Rol - Permiso - Menú</h1>
-                    <div>
-                        <div class="flex justify-between items-start">
-
-                            <p class="text-xl font-bold">Rol</p>
-
-                            <p class="text-xl font-bold">Permisos</p>
-
-                            <p class="text-xl font-bold">Menús</p>
-
-                        </div>
-                        <form @submit.prevent="form.put(route('roles.updateRelationship', props.role.id))">
-
-                            <div class="py-5 flex justify-between items-start">
-
-                                <p class="font-semibold text-lg"> {{ role.name }}</p>
-                                <div>
+                    <h1 class="text-2xl uppercase mb-3 font-bold">Edición de Rol - Permiso - Menú</h1>
+                    <form @submit.prevent="form.put(route('roles.updateRelationship', props.role.id))">
+                        <DataTable :value="roleArray" class="pb-10" tableStyle="min-width: 50rem; padding: 100rem;">
+                            <Column field="name" header="Rol" class="align-top"></Column>
+                            <Column header="Permisos" class="align-top">
+                                <template #body="slotProps">
                                     <div class="flex items-center mb-4">
                                         <input checked type="checkbox" disabled
                                             class="w-4 h-4 text-blue-600 bg-blue-500 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label class="ms-2 text-sm  text-gray-900 dark:text-gray-300">Controller</label>
                                     </div>
-                                    <RecursiveList :target="'alias'" :items="permissions" :comparisionItems="rolePermission"
-                                        :comparisionFlag="true" @upload-data="uploadData" />
-                                </div>
-                                <div>
+                                    <RecursiveList :target="'alias'" :items="permissions"
+                                        :comparisionItems="rolePermission" :comparisionFlag="true"
+                                        @upload-data="uploadData" />
+                                </template>
+                            </Column>
+                            <Column header="Menús" class="align-top">
+                                <template #body="slotProps">
                                     <div class="flex items-center mb-4">
                                         <input checked type="checkbox" disabled
                                             class="w-4 h-4 text-blue-600 bg-blue-500 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -119,12 +107,16 @@ console.log(props.role)
                                     </div>
                                     <RecursiveList :target="'name'" :items="menus" :comparisionItems="roleMenu"
                                         :comparisionFlag="true" @upload-data="uploadData" />
-                                </div>
-                            </div>
-                            <input type="hidden" name="_token" :value="csrf">
-                            <Button type="submit" label="Editar" class=" fixed bottom-20 left-44 mt-2 px-6 py-1  bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500" />
-                        </form>
-                    </div>
+                                </template>
+                            </Column>
+                        </DataTable>
+                        <input type="hidden" name="_token" :value="csrf">
+                        <Link :href="route('roles.indexRelationship')">
+                        <Button label="Listado" class="bottom-24 fixed px-3 py-1" />
+                        </Link>
+                        <Button type="submit" label="Editar"
+                            class="bottom-24 ml-24 fixed mt-6 px-6 py-1 bg-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:border-yellow-500 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600" />
+                    </form>
                 </div>
             </div>
         </div>
