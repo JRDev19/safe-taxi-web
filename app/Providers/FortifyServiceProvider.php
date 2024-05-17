@@ -6,12 +6,18 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\Role;
+use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Fortify;
+use App\Services\TreeBuilderService;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -20,7 +26,25 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(TreeBuilderService::class, function ($app) {
+            return new TreeBuilderService();
+        });
+
+        $this->app->instance(LoginResponse::class, new class($this->app->make(TreeBuilderService::class)) implements LoginResponse {
+            private $treeBuilderService;
+
+            public function __construct(TreeBuilderService $treeBuilderService)
+            {
+                $this->treeBuilderService = $treeBuilderService;
+            }
+
+            public function toResponse($request)
+            {
+                $userRole = Role::where('id', Auth::user()->id_role)->first();
+                $userRoleMenu = $userRole->menus()->get();
+                return session(['menu' => $this->treeBuilderService->buildTree($userRoleMenu->toArray())]);
+            }
+        });
     }
 
     /**

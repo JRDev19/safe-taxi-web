@@ -9,8 +9,7 @@ class RouteSoftDelete extends BaseRouter
 {
     public function resourceSoftDelete($name, $controller, array $options = [])
     {
-        $model = Str::singular($name); // this is optional, i need it for Route Model Binding
-        //$modelSingular = substr($model, 0, -1);
+        $model = Str::singular($name);
 
         $this
             ->get(
@@ -33,14 +32,14 @@ class RouteSoftDelete extends BaseRouter
         $this
             ->post(
                 $name .'/drop'.'/all',
-                $controller . '@drop_all'
-            )->name($name . '.drop.all')->withTrashed();
+                $controller . '@dropAll'
+            )->name($name . '.dropAll')->withTrashed();
 
         $this
             ->post(
                 $name .'/restore'.'/all',
-                $controller . '@restore_all'
-            )->name($name . '.restore.all')->withTrashed();
+                $controller . '@restoreAll'
+            )->name($name . '.restoreAll')->withTrashed();
 
 
         //return $this->resource($name, $controller, $options);

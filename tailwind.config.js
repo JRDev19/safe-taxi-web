@@ -48,6 +48,9 @@ export default {
                     950: "#55011c",
                 },
             },
+            boxShadow: {
+                custom: ['0 0 0 2px #ffffff, 0 0 0 4px #000000, 0 1px 2px 0 rgba(0, 0, 0, 0)'],
+            },
         },
     },
 

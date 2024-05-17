@@ -4,8 +4,13 @@ import { modal } from "momentum-modal"
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
+import PrimeVue from 'primevue/config';
 import './bootstrap';
 import '../css/app.css';
+//import 'primevue/resources/themes/aura-light-green/theme.css';
+import 'primevue/resources/themes/tailwind-light/theme.css';
+import 'primeicons/primeicons.css'
+
 
 DataTable.use(DataTablesLib);
 
@@ -32,6 +37,11 @@ createInertiaApp({
       })
       .use(plugin)
       .use(ZiggyVue)
+      .use(PrimeVue, {
+        pt: {
+          
+        }
+      })
       .component('DataTable', DataTable)
       .mount(el)
   }

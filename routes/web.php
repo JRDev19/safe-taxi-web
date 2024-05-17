@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,12 +27,23 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'permission.role', 'verified'],'prefix' => '/dashboard'], function () {
+//Route::group(['middleware' => ['validaterolespermissions', 'auth'], 'prefix' => '/dashboard'], function () {
+//Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified', ])->group(function () {
+    Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/roles/relationship', [RoleController::class, 'indexRelationship'])->name('roles.indexRelationship');
+    Route::get('/roles/relationship/{role}/edit', [RoleController::class, 'editRelationship'])->name('roles.editRelationship');
+    Route::put('/roles/relationship/{role}', [RoleController::class, 'updateRelationship'])->name('roles.updateRelationship');
+
+    Route::resourceSoftDelete('roles', RoleController::class);
+    Route::resource('roles',  RoleController::class);
+
+    Route::resourceSoftDelete('permissions', PermissionController::class);
+    Route::resource('permissions',  PermissionController::class);
+
+    Route::resourceSoftDelete('menus', MenuController::class);
+    Route::resource('menus',  MenuController::class);
 });
