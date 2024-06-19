@@ -17,6 +17,8 @@ const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
+    surname: props.user.surname,
+    phone: props.user.phone,
     photo: null,
 });
 
@@ -78,11 +80,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Información del perfil
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Actualice la información del perfil y la dirección de correo electrónico de su cuenta.
         </template>
 
         <template #form>
@@ -130,7 +132,7 @@ const clearPhotoFileInput = () => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Nombre" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -142,9 +144,37 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
 
+            <!-- Surname -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="surname" value="Apellidos" />
+                <TextInput
+                    id="surname"
+                    v-model="form.surname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="surname"
+                />
+                <InputError :message="form.errors.surname" class="mt-2" />
+            </div>
+
+            <!-- Phone -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="phone" value="Teléfono" />
+                <TextInput
+                    id="phone"
+                    v-model="form.phone"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="phone"
+                />
+                <InputError :message="form.errors.phone" class="mt-2" />
+            </div>
+
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="Correo electrónico" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -179,11 +209,11 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
+                Guardado.
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Guardar
             </PrimaryButton>
         </template>
     </FormSection>

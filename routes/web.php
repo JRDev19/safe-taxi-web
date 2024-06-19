@@ -3,6 +3,9 @@
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmergencyContactController;
+use App\Http\Controllers\Inertia\CustomUserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,4 +49,11 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::resourceSoftDelete('menus', MenuController::class);
     Route::resource('menus',  MenuController::class);
+
+    Route::resourceSoftDelete('users', UserController::class);
+    Route::resource('users',  UserController::class);
+
+    Route::get('/user/profile', [CustomUserProfileController::class, 'show'])->name('profile.show');
+    Route::resourceSoftDelete('emergency_contacts', EmergencyContactController::class);
+    Route::resource('emergency_contacts',  EmergencyContactController::class);
 });

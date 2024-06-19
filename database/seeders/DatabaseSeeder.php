@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);]
-        User::create(['name' => 'root', 'surname' => 'root', 'email'=>'root@root.com', 'password' => Hash::make('root'), 'id_role' => 1]);
+        User::create(['name' => 'root', 'surname' => 'root', 'phone'=>'9831123325', 'email'=>'root@root.com', 'password' => Hash::make('root'), 'id_role' => 1, 'is_active'=>1]);
 
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);

@@ -13,7 +13,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $defaultPermissions = ['roles', 'permissions', 'menus'];
+        $defaultPermissions = ['roles', 'permissions', 'menus', 'users', 'emergency_contacts'];
         $defaultSubpermissions = ['index','create','store', 'show', 'edit', 'update', 'destroy', 'trash', 'restore', 'drop', 'restoreAll', 'dropAll'];
 
         //Principal permission
