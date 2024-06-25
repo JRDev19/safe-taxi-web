@@ -31,7 +31,7 @@ const drivers = computed(() => {
                         :data="drivers"
                         :dataSelected="['full_name','surnames','is_actived','photo']"
                         :headerSelected="['Nombre','Apellidos','Estado','Foto']"
-                        :searchInput="['full_name']"
+                        :searchInput="['full_name','surnames']"
                         :routeCreate="'drivers.create'"
                         :routeTrash="'drivers.trash'"
                         :routeShow="{route: 'drivers.show'}"
