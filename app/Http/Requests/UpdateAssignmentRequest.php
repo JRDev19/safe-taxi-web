@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAssignmentRequest extends FormRequest
 {
@@ -13,6 +13,7 @@ class UpdateAssignmentRequest extends FormRequest
     {
         return true;
     }
+
     public function attributes()
     {
         return [
@@ -21,6 +22,7 @@ class UpdateAssignmentRequest extends FormRequest
             'is_actived' => 'Estado'
         ];
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -29,9 +31,29 @@ class UpdateAssignmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_driver' => 'required|exists:drivers,id',
-            'id_transport' => 'required|exists:transports,id',
+            'id_driver' => [
+                'required',
+                'exists:drivers,id',
+                Rule::unique('assignments')->where(function ($query) {
+                    return $query->where('id_driver', $this->id_driver)->where('id', '!=', $this->route('assignment')->id);
+                }),
+            ],
+            'id_transport' => [
+                'required',
+                'exists:transports,id',
+                Rule::unique('assignments')->where(function ($query) {
+                    return $query->where('id_transport', $this->id_transport)->where('id', '!=', $this->route('assignment')->id);
+                }),
+            ],
             'is_actived' => 'boolean',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id_driver.unique' => 'Este taxista ya tiene una asignación.',
+            'id_transport.unique' => 'Este número económico ya tiene una asignación.',
         ];
     }
 }

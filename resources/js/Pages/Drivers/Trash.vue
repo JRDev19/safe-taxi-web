@@ -14,7 +14,7 @@ const drivers = computed(() => {
   return props.drivers.map(driver => {
     return {
       ...driver,
-      is_actived: driver.is_actived == 1 ? 'Activo' : 'Inactivo'
+      is_actived: driver.is_actived == 1 ? 'Activo' : 'Inactivo',
     };
   });
 });

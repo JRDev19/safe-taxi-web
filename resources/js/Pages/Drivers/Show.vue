@@ -61,7 +61,7 @@ const status = computed(() => {
             </div>
             <div class="mt-4 mb-0">
                 <label for="photo" class="w-full">Foto</label>
-                <InputText class="w-full" id="photo" :placeholder="driver.photo" disabled />
+                <img :src="`${driver.photo}`" alt="Foto del conductor" class="w-17 h-20 rounded-full mx-auto" />
             </div>
             <div class="w-full flex items-start mt-6 justify-between">
                 <Link :href="route('drivers.edit', driver.id)">

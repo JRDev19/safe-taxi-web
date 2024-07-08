@@ -11,10 +11,11 @@ const props = defineProps({
 });
 
 const assignments = computed(() => {
-  return props.assignments.map(assignments => {
+  return props.assignments.map(assignment => {
     return {
-      ...assignments,
-      is_actived: assignments.is_actived == 1 ? 'Activo' : 'Inactivo'
+      ...assignment,
+      driver_full_name: `${assignment.drivers.full_name} ${assignment.drivers.surnames}`,
+      is_actived: assignment.is_actived == 1 ? 'Activo' : 'Inactivo'
     };
   });
 });
@@ -28,9 +29,9 @@ const assignments = computed(() => {
                     <h1 class="text-2xl font-bold uppercase mb-3">Listado de Asignación Taxista-Transporte</h1>
                     <DataTable
                         :data="assignments"
-                        :dataSelected="['drivers.surnames','transports.economic_number','is_actived']"
-                        :headerSelected="['Id Taxista','Id Transporte','Estado']"
-                        :searchInput="['drivers.surnames', 'transports.economic_number']"
+                        :dataSelected="['driver_full_name','transports.economic_number','is_actived']"
+                        :headerSelected="['Nombre Completo del Taxista','Número Económico del Transporte','Estado']"
+                        :searchInput="['driver_full_name', 'transports.economic_number']"
                         :routeCreate="'assignments.create'"
                         :routeTrash="'assignments.trash'"
                         :routeShow="{route: 'assignments.show'}"

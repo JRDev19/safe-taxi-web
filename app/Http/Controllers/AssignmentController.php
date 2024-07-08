@@ -39,7 +39,7 @@ class AssignmentController extends Controller
             $assignment->load('drivers', 'transports');
             return Inertia::modal('Assignments/Edit')->with([
                 'assignment' => $assignment,
-                'drivers' => Driver::all()->map(fn($driver) => ['label' => $driver->surnames, 'value' => $driver->id]),
+                'drivers' => Driver::all()->map(fn($driver) => ['label' => $driver->full_name . ' ' . $driver->surnames, 'value' => $driver->id]),
                 'transports' => Transport::all()->map(fn($transport) => ['label' => $transport->economic_number, 'value' => $transport->id]),
             ])->baseRoute('assignments.index', $assignment);
     }

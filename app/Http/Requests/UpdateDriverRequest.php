@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateDriverRequest extends FormRequest
 {
@@ -36,5 +37,17 @@ class UpdateDriverRequest extends FormRequest
             'is_actived' => 'required|boolean',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
+    }
+
+    public function persist()
+    {
+        $data = $this->validated();
+
+        if ($this->hasFile('photo')) {
+            $path = $this->file('photo')->store('photos', 'public');
+            $data['photo'] = Storage::url($path);
+        }
+
+        return $data;
     }
 }

@@ -4,6 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 import FloatLabel from 'primevue/floatlabel';
 import Button from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
+import { computed } from 'vue';
 
 const props = defineProps({
     assignment: {
@@ -18,7 +19,6 @@ const props = defineProps({
         required: true
     },
 });
-
 
 const form = useForm({
     id_driver: props.assignment.id_driver,
@@ -40,8 +40,8 @@ const options = [
             <h1 class="text-2xl font-bold text-center">Edita la asignación</h1>
             <div class="form-group flex flex-col w-full">
                 <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
-                    <Dropdown id="id_driver" v-model="form.id_driver" :options="drivers" filter option-label="label" option-value="value" class="w-full" />
-                    <label for="id_driver">Apellidos</label>
+                    <Dropdown id="id_driver" v-model="form.id_driver" :options="props.drivers" filter option-label="label" option-value="value" class="w-full" />
+                    <label for="id_driver">Nombre Completo del Taxista</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.id_driver">
                    <p>{{ form.errors.id_driver }}</p>
@@ -49,7 +49,7 @@ const options = [
 
                 <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
                     <Dropdown id="id_transport" v-model="form.id_transport" :options="transports" filter option-label="label" option-value="value" class="w-full" />
-                    <label for="id_transport">Número economico</label>
+                    <label for="id_transport">Número Económico</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.id_transport">
                    <p>{{ form.errors.id_transport }}</p>
@@ -62,7 +62,6 @@ const options = [
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.is_actived">
                    <p>{{ form.errors.is_actived }}</p>
                 </div>
-
             </div>
             <input type="hidden" name="_token" :value="csrf">
             <div class="flex justify-end">
@@ -71,7 +70,6 @@ const options = [
         </form>
     </Modal>
 </template>
-
 
 <script>
 export default {

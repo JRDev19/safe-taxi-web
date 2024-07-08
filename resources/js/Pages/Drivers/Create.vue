@@ -1,7 +1,6 @@
 <script setup>
 import Modal from "@/Components/MomentumModal.vue";
 import { useForm } from "@inertiajs/vue3";
-import Dropdown from 'primevue/dropdown';
 import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
@@ -9,7 +8,7 @@ import Button from 'primevue/button';
 const form = useForm({
     full_name: '',
     surnames: '',
-    photo: ''
+    photo: null
 })
 
 const props = defineProps({
@@ -17,6 +16,11 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const handleFileChange = (event) => {
+    form.photo = event.target.files[0];
+}
+
 
 </script>
 
@@ -44,11 +48,10 @@ const props = defineProps({
 
 
                 <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
-                    <InputText id="photo" v-model="form.photo" class="w-full" />
-                    <label for="photo">Escribe una URL de la foto</label>
+                    <input type="file" @change="handleFileChange" accept="image/*" class="w-full" />
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.photo">
-                   <p> {{ form.errors.photo }} </p>
+                    <p>{{ form.errors.photo }}</p>
                 </div>
 
             </div>

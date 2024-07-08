@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
-use Illuminate\Http\Request;
 use App\Models\Driver;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class DriverController extends Controller
 {
@@ -21,8 +21,8 @@ class DriverController extends Controller
     }
     public function store(StoreDriverRequest $request)
     {
-        Driver::create($request->all());
-
+        $data = $request->persist();
+        Driver::create($data);
         return redirect()->route('drivers.index')->with('message', 'Conductor creado correctamente');
     }
     public function show(Driver $driver)
@@ -35,7 +35,17 @@ class DriverController extends Controller
     }
     public function update(Driver $driver, UpdateDriverRequest $request)
     {
-        $driver->update($request->all());
+        $data = $request->persist();
+
+        // Si se sube una nueva foto, eliminar la antigua
+        if ($request->hasFile('photo') && $driver->photo) {
+            $oldPhotoPath = str_replace('/storage', 'public', $driver->photo);
+            if (Storage::exists($oldPhotoPath)) {
+                Storage::delete($oldPhotoPath);
+            }
+        }
+    
+        $driver->update($data);
 
         return redirect()->route('drivers.index')->with('message', 'Conductor actualizado con éxito');
     }

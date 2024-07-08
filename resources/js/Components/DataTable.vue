@@ -249,7 +249,7 @@ const formatDate = (value) => {
             <div v-for="(datum, index) in dataSelected">
                 <Column :field="datum" :header="headerSelected[index]"></Column>
             </div>
-
+            
             <Column v-if="props.isTrash == false" header="Creado" field="created_at">
                 <template #body="slotProps">
                     <span>{{ formatDate(slotProps.data.created_at) }} </span>

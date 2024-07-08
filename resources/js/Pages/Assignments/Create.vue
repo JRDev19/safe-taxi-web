@@ -4,6 +4,8 @@ import { useForm } from "@inertiajs/vue3";
 import Dropdown from 'primevue/dropdown';
 import FloatLabel from 'primevue/floatlabel';
 import Button from 'primevue/button';
+import { computed } from 'vue';
+
 
 const form = useForm({
     id_driver: '',
@@ -22,6 +24,14 @@ const props = defineProps({
     },
 });
 
+const driversFullName = computed(() => {
+    return props.drivers.map(driver => {
+        return {
+            ...driver,
+            fullName: `${driver.full_name} ${driver.surnames}`
+        }
+    });
+});
 </script>
 
 <template>
@@ -30,7 +40,7 @@ const props = defineProps({
             <h1 class="text-2xl font-bold text-center">Crear una nueva asignación</h1>
             <div class="form-group flex flex-col w-full">
                 <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
-                    <Dropdown v-model="form.id_driver" inputId="id_driver" :options="drivers" filter optionLabel="surnames" class="w-full" optionValue="id" />
+                    <Dropdown v-model="form.id_driver" inputId="id_driver" :options="driversFullName" filter optionLabel="fullName" class="w-full" optionValue="id" />
                     <label for="id_driver">Selecciona el taxista</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.id_driver">

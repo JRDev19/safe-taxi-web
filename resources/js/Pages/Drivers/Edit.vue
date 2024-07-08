@@ -5,11 +5,17 @@ import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     driver: {
         type: Object,
+        required: true
     },
+    errors: {
+        type: Object,
+        default: () => ({})
+    }   
 });
 
 
@@ -17,13 +23,34 @@ const form = useForm({
     full_name: props.driver.full_name,
     surnames: props.driver.surnames,
     is_actived: props.driver.is_actived,
-    photo: props.driver.photo
+    photo: props.driver.photo,
 });
 
+const photoUrl = ref(`${props.driver.photo}`);
+const newPhoto = ref(null);
+
+const handleFileChange = (event) => {
+    newPhoto.value = event.target.files[0];
+};
+
+watch(newPhoto, (newFile) => {
+    if (newFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            photoUrl.value = e.target.result;
+        };
+        reader.readAsDataURL(newFile);
+        form.photo = newFile;
+    } else {
+        photoUrl.value = `${props.driver.photo}`;
+        form.photo = null;
+    }
+});
 const options = [
     { label: 'Activo', value: 1 },
     { label: 'Inactivo', value: 0 }
 ];
+
 
 
 </script>
@@ -57,10 +84,14 @@ const options = [
                    <p>{{ form.errors.is_actived }}</p>
                 </div>
 
-                <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
-                    <InputText id="photo" v-model="form.photo" class="w-full" />
-                    <label for="photo">Escribe una URL de la foto</label>
-                </FloatLabel>
+                <div class="w-full md:w-14rem mt-6 mb-0">
+                    <label for="photo" class="block">Foto actual</label>
+                    <img :src="photoUrl" alt="Foto del conductor" class="w-24 h-24 rounded-full mx-auto" />
+                </div>
+                <div class="w-full md:w-14rem mt-6 mb-0">
+                    <label for="new_photo" class="block">Subir nueva foto</label>
+                    <input type="file" id="new_photo" @change="handleFileChange" accept="image/*" class="block w-full" />
+                </div>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.photo">
                     <p>{{ form.errors.photo }}</p>
                 </div>

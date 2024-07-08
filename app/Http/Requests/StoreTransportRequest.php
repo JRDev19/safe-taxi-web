@@ -44,7 +44,7 @@ class StoreTransportRequest extends FormRequest
             'car_plate' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
             'sub_brand' => 'required|string|max:255',
-            'economic_number' => 'required|string|digits_between:1,4',
+            'economic_number' => 'required|string|digits_between:1,4|unique:transports,economic_number',
             'is_actived' => 'boolean'
         ];
     }

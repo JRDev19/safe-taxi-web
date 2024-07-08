@@ -12,6 +12,7 @@ const assignments = computed(() => {
   return props.assignments.map(assignments => {
     return {
       ...assignments,
+      driver_full_name: `${assignments.drivers.full_name} ${assignments.drivers.surnames}`,
       is_actived: assignments.is_actived == 1 ? 'Activo' : 'Inactivo'
     };
   });
@@ -28,9 +29,9 @@ const assignments = computed(() => {
                     <h1 class="text-2xl font-bold uppercase mb-3">Listado de Asignaciones eliminados</h1>
                     <DataTable
                         :data="assignments"
-                        :dataSelected="['drivers.surnames','transports.economic_number','is_actived']"
-                        :headerSelected="['Id Taxista','Id Transporte','Estado']"
-                        :searchInput="['drivers.surnames','transports.economic_number']"
+                        :dataSelected="['driver_full_name','transports.economic_number','is_actived']"
+                        :headerSelected="['Nombre Completo del Taxista','Número Económico del Transporte','Estado']"
+                        :searchInput="['driver_full_name','transports.economic_number']"
                         :routeRestore="{route: 'assignments.restore'}"
                         :routeDrop="{route: 'assignments.drop'}"
                         :routeRestoreAll="{route: 'assignments.restoreAll'}"
