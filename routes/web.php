@@ -50,12 +50,13 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::resourceSoftDelete('menus', MenuController::class);
     Route::resource('menus',  MenuController::class);
 
+    Route::resourceSoftDelete('drivers', DriverController::class);
+    Route::resource('drivers',  DriverController::class);
+
+    Route::resourceSoftDelete('transports', TransportController::class);
+    Route::resource('transports',  TransportController::class);
+
+    Route::resourceSoftDelete('assignments', AssignmentController::class);
+    Route::resource('assignments',  AssignmentController::class);
 });
-Route::resourceSoftDelete('drivers', DriverController::class);
-Route::resource('drivers',  DriverController::class);
 
-Route::resourceSoftDelete('transports', TransportController::class);
-Route::resource('transports',  TransportController::class);
-
-Route::resourceSoftDelete('assignments', AssignmentController::class);
-Route::resource('assignments',  AssignmentController::class);
