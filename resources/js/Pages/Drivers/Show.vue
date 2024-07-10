@@ -59,10 +59,17 @@ const status = computed(() => {
                 <label for="is_actived" class="w-full">Estado</label>
                 <InputText class="w-full" id="is_actived" :placeholder="status" disabled />
             </div>
+
             <div class="mt-4 mb-0">
-                <label for="photo" class="w-full">Foto</label>
+            <template v-if="driver.photo">
                 <img :src="`${driver.photo}`" alt="Foto del conductor" class="w-17 h-20 rounded-full mx-auto" />
-            </div>
+            </template>
+            <template v-else>
+                <div class="w-17 h-20 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-gray-500">
+                    No hay foto
+                </div>
+            </template>
+        </div>
             <div class="w-full flex items-start mt-6 justify-between">
                 <Link :href="route('drivers.edit', driver.id)">
                 <Button label="Editar" icon="pi pi-file-edit" aria-label="Ver"

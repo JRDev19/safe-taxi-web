@@ -6,7 +6,6 @@ use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
 use App\Models\Driver;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Storage;
 
 class DriverController extends Controller
 {
@@ -35,18 +34,7 @@ class DriverController extends Controller
     }
     public function update(Driver $driver, UpdateDriverRequest $request)
     {
-        $data = $request->persist();
-
-        // Si se sube una nueva foto, eliminar la antigua
-        if ($request->hasFile('photo') && $driver->photo) {
-            $oldPhotoPath = str_replace('/storage', 'public', $driver->photo);
-            if (Storage::exists($oldPhotoPath)) {
-                Storage::delete($oldPhotoPath);
-            }
-        }
-    
-        $driver->update($data);
-
+        $driver->update($request->persist());
         return redirect()->route('drivers.index')->with('message', 'Conductor actualizado con éxito');
     }
     public function destroy(Driver $driver)

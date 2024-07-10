@@ -18,7 +18,7 @@ class Driver extends Model
         'full_name',
         'surnames',
         'is_actived',
-        'photo'	,
+        'photo',
     ];
 
     public function assignments()

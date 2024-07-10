@@ -45,6 +45,21 @@ class StoreDriverRequest extends FormRequest
 
         
     }
+    public function messages()
+    {
+        return [
+            'full_name.required' => 'El :attribute es obligatorio.',
+            'full_name.string' => 'El :attribute debe ser una cadena de texto.',
+            'full_name.max' => 'El :attribute no puede tener más de :max caracteres.',
+            'surnames.required' => 'Los :attribute son obligatorios.',
+            'surnames.string' => 'Los :attribute deben ser una cadena de texto.',
+            'surnames.max' => 'Los :attribute no pueden tener más de :max caracteres.',
+            'is_actived.boolean' => 'El :attribute debe ser verdadero o falso.',
+            'photo.image' => 'La :attribute debe ser una imagen.',
+            'photo.mimes' => 'La :attribute debe ser un archivo de tipo: :values.',
+            'photo.max' => 'La :attribute no puede ser mayor de :max kilobytes.',
+        ];
+    }
     public function persist()
     {
         $data = $this->validated();

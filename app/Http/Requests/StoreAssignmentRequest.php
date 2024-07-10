@@ -59,8 +59,13 @@ class StoreAssignmentRequest extends FormRequest
     public function messages()
     {
         return [
+            'id_driver.required' => 'El :attribute es obligatorio.',
+            'id_driver.exists' => 'El :attribute seleccionado no existe.',
             'id_driver.unique' => 'Este taxista ya tiene una asignación.',
+            'id_transport.required' => 'El :attribute es obligatorio.',
+            'id_transport.exists' => 'El :attribute seleccionado no existe.',
             'id_transport.unique' => 'Este número económico ya tiene una asignación.',
+            'is_actived.boolean' => 'El :attribute debe ser activo o inactivo.',
         ];
     }
 }
