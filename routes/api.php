@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->get('/v1/user', function (Request $request) {
+    return response()->json([
+        'message' => $request->user(),
+    ]);
 });
+
+Route::middleware('auth:sanctum')->get('/v1/logout', [AuthenticationController::class, 'logout']);
+
+
+Route::post('/v1/register', [AuthenticationController::class, 'store']);
+Route::post('/v1/login', [AuthenticationController::class, 'show']);
