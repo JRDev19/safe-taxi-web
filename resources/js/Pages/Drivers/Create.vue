@@ -8,7 +8,7 @@ import Button from 'primevue/button';
 const form = useForm({
     full_name: '',
     surnames: '',
-    photo: null
+    originalPhoto: null
 })
 
 const props = defineProps({
@@ -18,9 +18,8 @@ const props = defineProps({
 });
 
 const handleFileChange = (event) => {
-    form.photo = event.target.files[0];
+    form.originalPhoto = event.target.files[0];
 }
-
 
 </script>
 
@@ -46,12 +45,12 @@ const handleFileChange = (event) => {
                     {{ form.errors.surnames }}
                 </div>
 
-
                 <FloatLabel class="w-full md:w-14rem mt-6 mb-0">
-                    <input type="file" @change="handleFileChange" accept="image/*" class="w-full" />
+                    <input accept=".png,.jpg,.jpeg" @change="handleFileChange" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPEG o JPG</p>
                 </FloatLabel>
-                <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.photo">
-                    <p>{{ form.errors.photo }}</p>
+                <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.originalPhoto">
+                    <p>{{ form.errors.originalPhoto }}</p>
                 </div>
 
             </div>

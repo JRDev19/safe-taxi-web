@@ -25,12 +25,12 @@ const props = defineProps({
 <template>
     <Modal>
         <form @submit.prevent="form.post(route('transports.store'))">
-            <h1 class="text-2xl font-bold text-center">Crear un nuevo conductor</h1>
+            <h1 class="text-2xl font-bold text-center">Crear un nuevo transporte</h1>
             <div class="form-group flex flex-col w-full">
 
                 <FloatLabel class="w-full md:w-14rem mt-5 mb-0">
                     <InputText id="model" v-model="form.model" class="w-full" />
-                    <label for="model">Escribe el nombre del modelo</label>
+                    <label for="model">Escribe el modelo</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.model">
                     {{ form.errors.model }}
@@ -38,7 +38,7 @@ const props = defineProps({
 
                 <FloatLabel class="w-full md:w-14rem mt-5 mb-0">
                     <InputText id="sub_model" v-model="form.sub_model" class="w-full" />
-                    <label for="sub_model">Escribe el sub modelo</label>
+                    <label for="sub_model">Escribe el submodelo</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.sub_model">
                     {{ form.errors.sub_model }}
@@ -62,7 +62,7 @@ const props = defineProps({
 
                 <FloatLabel class="w-full md:w-14rem mt-5 mb-0">
                     <InputText id="sub_brand" v-model="form.sub_brand" class="w-full" />
-                    <label for="sub_brand">Escribe la sub marca</label>
+                    <label for="sub_brand">Escribe la submarca</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.sub_brand">
                    <p> {{ form.errors.brand }} </p>
@@ -70,7 +70,7 @@ const props = defineProps({
 
                 <FloatLabel class="w-full md:w-14rem mt-5 mb-0">
                     <InputText id="economic_number" v-model="form.economic_number" class="w-full" />
-                    <label for="economic_number">Escribe el número economico</label>
+                    <label for="economic_number">Escribe el número económico</label>
                 </FloatLabel>
                 <div class="text-red-500 w-full flex justify-end mt-1 text-sm" v-if="form.errors.economic_number">
                    <p> {{ form.errors.economic_number}} </p>

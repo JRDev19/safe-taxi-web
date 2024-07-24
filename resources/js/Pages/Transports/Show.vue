@@ -43,14 +43,14 @@ const status = computed(() => {
 
 <template>
     <Modal>
-        <h1 class="text-2xl font-bold text-center mb-3">Visualizar vehiculo</h1>
-        <div class="form-group  grid grid-cols-1 md:grid-cols-2 gap-6">  
+        <h1 class="text-2xl font-bold text-center mb-3">Visualizar transporte</h1>
+        <div class="form-group  grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flex flex-col space-y-1">
                 <label for="model" class="w-full">Modelo</label>
                 <InputText class="w-full" id="model" :placeholder="transport.model" disabled />
             </div>
             <div class="flex flex-col space-y-1">
-                <label for="sub_model" class="w-full">Sub Modelo</label>
+                <label for="sub_model" class="w-full">Submodelo</label>
                 <InputText class="w-full" id="sub_model" :placeholder="transport.sub_model" disabled />
             </div>
             <div class="flex flex-col space-y-1">
@@ -62,11 +62,11 @@ const status = computed(() => {
                 <InputText class="w-full" id="brand" :placeholder="transport.brand" disabled />
             </div>
             <div class="flex flex-col space-y-1">
-                <label for="sub_brand" class="w-full">Sub Marca</label>
+                <label for="sub_brand" class="w-full">Submarca</label>
                 <InputText class="w-full" id="sub_brand" :placeholder="transport.sub_brand" disabled />
             </div>
             <div class="flex flex-col space-y-1">
-                <label for="economic_number" class="w-full">Número economico</label>
+                <label for="economic_number" class="w-full">Número económico</label>
                 <InputText class="w-full" id="economic_number" :placeholder="transport.economic_number" disabled />
             </div>
             <div class="flex flex-col space-y-1">

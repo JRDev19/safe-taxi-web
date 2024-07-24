@@ -14,19 +14,11 @@ class StoreAssignmentRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'is_actived' => $this->input('is_actived', true),
-        ]);
-    }
-
     public function attributes()
     {
         return [
             'id_driver' => 'Id Taxista',
             'id_transport' => 'Id Transporte',
-            'is_actived' => 'Estado'
         ];
     }
 
@@ -48,24 +40,15 @@ class StoreAssignmentRequest extends FormRequest
             'id_transport' => [
                 'required',
                 'exists:transports,id',
-                Rule::unique('assignments')->where(function ($query) {
-                    return $query->where('id_transport', $this->id_transport);
-                }),
             ],
-            'is_actived' => 'boolean',
         ];
     }
 
-    public function messages()
+    protected function passedValidation(): void
     {
-        return [
-            'id_driver.required' => 'El :attribute es obligatorio.',
-            'id_driver.exists' => 'El :attribute seleccionado no existe.',
-            'id_driver.unique' => 'Este taxista ya tiene una asignación.',
-            'id_transport.required' => 'El :attribute es obligatorio.',
-            'id_transport.exists' => 'El :attribute seleccionado no existe.',
-            'id_transport.unique' => 'Este número económico ya tiene una asignación.',
-            'is_actived.boolean' => 'El :attribute debe ser activo o inactivo.',
-        ];
+        $this->merge([
+            'is_actived' => true,
+        ]);
+
     }
 }

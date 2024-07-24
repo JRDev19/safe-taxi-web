@@ -13,37 +13,43 @@ class DriverController extends Controller
     {
         return Inertia::render('Drivers/Index', ['drivers'=> $driver->get()]);
     }
+
     public function create(Driver $drivers)
     {
         return Inertia::modal('Drivers/Create', ['driver' => $drivers->get()])->baseRoute("drivers.index", $drivers);
-
     }
+
     public function store(StoreDriverRequest $request)
     {
-        $data = $request->persist();
-        Driver::create($data);
-        return redirect()->route('drivers.index')->with('message', 'Conductor creado correctamente');
+        Driver::create($request->except('originalPhoto'));
+
+        return redirect()->route('drivers.index')->with('message', 'Conductor creado con éxito');
     }
+
     public function show(Driver $driver)
     {
         return Inertia::modal('Drivers/Show')->with(['driver' => $driver,])->baseRoute("drivers.index", $driver);
     }
+
     public function edit(Driver $driver)
     {
         return Inertia::modal('Drivers/Edit')->with(['driver' => $driver,])->baseRoute("drivers.index", $driver);
     }
+
     public function update(Driver $driver, UpdateDriverRequest $request)
     {
-        $driver->update($request->persist());
+        $driver->update($request->except('changedPhoto'));
+
         return redirect()->route('drivers.index')->with('message', 'Conductor actualizado con éxito');
     }
+
     public function destroy(Driver $driver)
     {
         $driver->delete();
 
         return redirect()->route('drivers.index')->with('message', 'Conductor eliminado con éxito');
     }
-    
+
     public function trash(Driver $drivers)
     {
         return Inertia::render('Drivers/Trash', ['drivers' => $drivers->onlyTrashed()->get()]);

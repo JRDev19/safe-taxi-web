@@ -26,7 +26,7 @@ const assignments = computed(() => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-6 py-10">
-                    <h1 class="text-2xl font-bold uppercase mb-3">Listado de Asignaciones eliminados</h1>
+                    <h1 class="text-2xl font-bold uppercase mb-3">Listado de Asignaciones Taxista-Transporte eliminadas</h1>
                     <DataTable
                         :data="assignments"
                         :dataSelected="['driver_full_name','transports.economic_number','is_actived']"

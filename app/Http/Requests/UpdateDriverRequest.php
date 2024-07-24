@@ -32,48 +32,32 @@ class UpdateDriverRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => 'required_if:photo_changed,true|string|max:255',
-            'surnames' => 'required_if:photo_changed,true|string|max:255',
-            'is_actived' => 'required_if:photo_changed,true|boolean',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'full_name' => 'required|string|max:255',
+            'surnames' => 'required|string|max:255',
+            'changedPhoto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'is_actived' => 'required|boolean',
         ];
     }
-    public function messages()
-    {
-        return [
-            'full_name.required' => 'El nombre es obligatorio.',
-            'surnames.required' => 'Los apellidos son obligatorios.',
-            'is_actived.required' => 'El estado es obligatorio.',
-            'photo.image' => 'El archivo debe ser una imagen.',
-            'photo.mimes' => 'La imagen debe ser de tipo jpeg, png, jpg o gif.',
-            'photo.max' => 'La imagen no debe ser mayor a 2MB.',
-        ];
-    }
-    public function persist()
-    {
-        // Agrega esta línea para ver los datos validados
-        dd($this->validated(), $this->file('photo'));
 
-        $data = $this->validated();
+    protected function passedValidation(): void
+    {
+        $validatedData = $this->validated();
 
-        if ($this->hasFile('photo')) {
-            $oldPhoto = $this->route('driver')->photo;
-            if ($oldPhoto) {
-                $oldPhotoPath = str_replace('/storage', 'public', $oldPhoto);
-                if (Storage::exists($oldPhotoPath)) {
-                    Storage::delete($oldPhotoPath);
-                }
+        if ($this->hasFile('changedPhoto')) {
+            if($this->route('driver')->photo !=null){
+                $oldPhotoPath = str_replace('/storage', 'public', $this->route('driver')->photo);
+
+                Storage::delete($oldPhotoPath);
             }
 
-            $path = $this->file('photo')->store('photos', 'public');
-            $data['photo'] = Storage::url($path);
-        } else {
-            $data['photo'] = $this->route('driver')->photo;  // Mantener la foto anterior si no hay una nueva
+            $path = $this->file('changedPhoto')->store('photos', 'public');
+            $validatedData['changedPhoto'] = Storage::url($path);
+
+            $this->merge([
+                'is_actived' => true,
+                'photo' => $validatedData['changedPhoto'] ?? null,
+            ]);
         }
 
-        // Agrega esta línea para ver los datos a ser actualizados
-        dd($data);
-
-        return $data;
     }
 }

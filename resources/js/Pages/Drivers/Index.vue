@@ -15,7 +15,7 @@ const drivers = computed(() => {
     return {
       ...driver,
       is_actived: driver.is_actived == 1 ? 'Activo' : 'Inactivo',
-      photo: driver.photo ? driver.photo : 'No tiene foto',
+      photo: driver.photo ? driver.photo : 'No contiene foto',
     };
   });
 });

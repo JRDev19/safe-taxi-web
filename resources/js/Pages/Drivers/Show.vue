@@ -46,7 +46,7 @@ const status = computed(() => {
 <template>
     <Modal>
         <h1 class="text-2xl font-bold text-center">Visualizar conductor</h1>
-        <div class="form-group flex flex-col">  
+        <div class="form-group flex flex-col">
             <div class="mt-4 mb-0">
                 <label for="full_name" class="w-full">Nombre</label>
                 <InputText class="w-full" id="full_name" :placeholder="driver.full_name" disabled />
@@ -61,14 +61,16 @@ const status = computed(() => {
             </div>
 
             <div class="mt-4 mb-0">
-            <template v-if="driver.photo">
+
+
+            <div v-if="driver.photo">
                 <img :src="`${driver.photo}`" alt="Foto del conductor" class="w-17 h-20 rounded-full mx-auto" />
-            </template>
-            <template v-else>
+            </div>
+            <div v-else>
                 <div class="w-17 h-20 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-gray-500">
                     No hay foto
                 </div>
-            </template>
+            </div>
         </div>
             <div class="w-full flex items-start mt-6 justify-between">
                 <Link :href="route('drivers.edit', driver.id)">

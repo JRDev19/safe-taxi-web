@@ -26,11 +26,11 @@ const transports = computed(() => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-6 py-10 flex flex-col">
-                    <h1 class="text-2xl uppercase mb-3 font-bold">Listado de Vehiculos</h1>
+                    <h1 class="text-2xl uppercase mb-3 font-bold">Listado de transportes</h1>
                     <DataTable
                         :data="transports"
                         :dataSelected="['model','sub_model','car_plate','brand','sub_brand','economic_number','is_actived']"
-                        :headerSelected="['Modelo','Sub_modelo','Matrícula','Marca','Sub_marca','Número economico','Estado']"
+                        :headerSelected="['Modelo','Submodelo','Matrícula','Marca','Submarca','Número económico','Estado']"
                         :searchInput="['car_plate']"
                         :routeCreate="'transports.create'"
                         :routeTrash="'transports.trash'"

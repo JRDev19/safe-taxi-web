@@ -51,7 +51,8 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::resource('menus',  MenuController::class);
 
     Route::resourceSoftDelete('drivers', DriverController::class);
-    Route::resource('drivers',  DriverController::class);
+    Route::post('/drivers/{driver}', [DriverController::class, 'update'])->name('drivers.update');
+    Route::resource('drivers',  DriverController::class)->except('update');
 
     Route::resourceSoftDelete('transports', TransportController::class);
     Route::resource('transports',  TransportController::class);
