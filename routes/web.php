@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\Inertia\CustomUserProfileController;
+use App\Http\Controllers\TransportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,4 +59,15 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/user/profile', [CustomUserProfileController::class, 'show'])->name('profile.show');
     Route::resourceSoftDelete('emergency_contacts', EmergencyContactController::class);
     Route::resource('emergency_contacts',  EmergencyContactController::class);
+
+    Route::resourceSoftDelete('drivers', DriverController::class);
+    Route::post('/drivers/{driver}', [DriverController::class, 'update'])->name('drivers.update');
+    Route::resource('drivers',  DriverController::class)->except('update');
+
+    Route::resourceSoftDelete('transports', TransportController::class);
+    Route::resource('transports',  TransportController::class);
+
+    Route::resourceSoftDelete('assignments', AssignmentController::class);
+    Route::resource('assignments',  AssignmentController::class);
 });
+

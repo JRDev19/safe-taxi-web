@@ -17,6 +17,7 @@ const props = defineProps({
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-6 py-10">
                     <h1 class="text-2xl font-bold uppercase mb-3">Listado de Menús eliminados</h1>
                     <DataTable
+                        :data="menus"
                         :dataSelected="['name', 'menu_self.name','destination_url']"
                         :headerSelected="['Nombre', 'Menú padre', 'URL']"
                         :searchInput="['name']"
