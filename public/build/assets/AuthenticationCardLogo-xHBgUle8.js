@@ -1,0 +1,1 @@
+import{o as e,c as o,w as a,a as t,u as r,k as s}from"./app-P-OTlrBq.js";const c=["src"],m={__name:"AuthenticationCardLogo",setup(n){return(i,_)=>(e(),o(r(s),{href:"/"},{default:a(()=>[t("img",{src:"/images/imoveqroo-logo-original.png",alt:"Home"},null,8,c)]),_:1}))}};export{m as _};

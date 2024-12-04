@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-x3n3nnut.js";import{e as c,o}from"./app-P-OTlrBq.js";const n={};function r(s,t){return o(),c("div",null," Acceso denegado ")}const d=e(n,[["render",r]]);export{d as default};

@@ -40,7 +40,7 @@ class StoreUserRequestApi extends FormRequest
         return [
             'name' => 'required|string|between:3,50',
             'surname' => 'required|string|between:3,50',
-            'email' => ['required','email', 'max:255', /*Rule::unique('users'),*/],
+            'email' => ['required','email', 'max:255', Rule::unique('users')],
             'phone' => 'required|string|max:255',
             'password' => $this->passwordRules(),
         ];
